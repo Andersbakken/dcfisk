@@ -476,6 +476,11 @@ std::shared_ptr<CompilerArgs> CompilerArgs::create(const std::vector<std::string
                     }
                 }
             }
+
+            size_t slash = arg.rfind("/") + 1; // will be 0 if not found
+            MD5_Update(&Client::data().md5, arg.c_str() + slash, arg.size() - slash);
+            VERBOSE("Md5'ing arg %zu [%s]", i, arg.c_str() + slash);
+            continue;
         }
 
         VERBOSE("Unhandled arg %s", arg.c_str());
